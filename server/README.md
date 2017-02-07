@@ -52,3 +52,11 @@ utility.js: This file is required by server-config.js and request-handler.js. It
 
   Geocoding user address into longitude and latitude with api calls to Google Maps Geocode service
     -geoCodeIt
+
+emailWorker.js: uses the node-module, nodemailer, to send emails to all users in the users database. Logs the most recent introduced_on date in the emailTimestamp.txt using file system module
+
+If you would like to test the code on your local machine, you can use the insertSampleUsers.js file to insert the sampleUserData.json. NOTE: in the sampleUserData.json, make sure you insert real emails in the data (right now example1@gmail.com is in the fields). 
+
+billAssociate.js: the input of the main export function, billAssociate, is a specific keyword object (example, {keyword: 'immigration'}). Helper functions getAllByKeywords and getAllByKeywordsGen searches through the keywords stored in our bills database and uses a regex to find matches between the user keyword and the keywords/keywords_generated field. The output of billAssociate will be the keyword object with a new field, 'relatedBills', with an array of bill ids related to that keyword. 
+
+
