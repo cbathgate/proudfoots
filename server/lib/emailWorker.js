@@ -11,6 +11,8 @@ console.log(emailTimestampFile);
 
 mongoose.connect('mongodb://localhost/billfetchertest');
 
+//GENERAL REFACTOR GOAL: Use promises
+
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -101,12 +103,14 @@ var addBills = function(keywordObj, cb) {
                   console.log('This is an error in addBills');
                   cb(err);
                 } else {
+                  //currently, only sending new introduced bills
                   var resultLastVersion = bill['introduced_on'];
 
                   //format result date for comparison 
                   resultDate = new Date(resultLastVersion);
                   resultDate = resultDate.setDate(resultDate.getDate() + 1);
 
+                  //comparing with the javascript number of milliseconds
                   if (resultDate > lastBillsSent) {
                     result += "<h2> Keyword: " + key + "</h2>";
                     result += "<h4 style='color:grey;'> Bill ID: " + bill['bill_id'] + "</h2>";
@@ -128,7 +132,7 @@ var addBills = function(keywordObj, cb) {
                     //convert the format of 'last_version_on', then compare. searches to find most recent
                     var countVersion = 0;
 
-                    //REFACTOR GOAL: process time is relatively slow because it has to cycle through every single bill, convert the date, and then do a comparison to find out the lastVersion. Is there a way to construct a query that will just return one bill with the most recent 'last_version_on' date
+                    //REFACTOR GOAL: process time is relatively slow because it has to cycle through every single bill, convert the date, and then do a comparison to find out the lastVersion. Is there a way to construct a query that will just return one bill with the most recent 'last_version_on' date?
                     Bill.find({}, function(err, resultBills) {
                       if (err) {
                         console.log('Could not find Bill database', err);
@@ -183,7 +187,7 @@ exports.sendMail = function(userObj, cb) {
       let mailOptions = {
         from: '"Legislature Watch" <legislaturewatch@gmail.com>', // sender address
         to: userObj.email, // email from user object
-        subject: '[Legislature Watch] Your Daily Digest ' + date, // Subject line
+        subject: '[Legislation Watch] Your Daily Digest ' + date, // Subject line
         html: insertHtml // html body
       };
 
