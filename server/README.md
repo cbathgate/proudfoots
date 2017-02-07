@@ -52,3 +52,5 @@ utility.js: This file is required by server-config.js and request-handler.js. It
 
   Geocoding user address into longitude and latitude with api calls to Google Maps Geocode service
     -geoCodeIt
+    
+api_config.js: This file contains API configurations
