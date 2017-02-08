@@ -59,4 +59,5 @@ If you would like to test the code on your local machine, you can use the insert
 
 billAssociate.js: the input of the main export function, billAssociate, is a specific keyword object (example, {keyword: 'immigration'}). Helper functions getAllByKeywords and getAllByKeywordsGen searches through the keywords stored in our bills database and uses a regex to find matches between the user keyword and the keywords/keywords_generated field. The output of billAssociate will be the keyword object with a new field, 'relatedBills', with an array of bill ids related to that keyword. 
 
+api_config.js: This file contains API configurations
 
